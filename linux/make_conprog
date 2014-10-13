@@ -1,0 +1,29 @@
+#!/bin/sh
+
+OUTPUT_FILE=conprog.bin
+DTB_FILE=../arm-soc/arch/arm/boot/dts/n32905-demo-board.dtb
+IMAGE_FILE=../arm-soc/arch/arm/boot/Image
+
+# Change to directory of the script.
+cd "$(dirname "$0")"
+
+# Erase the output file.
+rm -f $OUTPUT_FILE
+
+# Create a 32K file of all zeros.
+/bin/dd if=/dev/zero ibs=1k count=32 of=$OUTPUT_FILE conv=sync > /dev/null 2>&1
+
+# Add the initial instructions to the file.
+#
+#     mov r0, #0x0000
+#     ldr r2, =0xc0000100
+#     mov pc, #0x8000
+#
+/bin/echo -n -e \\x00\\x00\\xa0\\xe3\\x00\\x20\\x9f\\xe5\\x02\\xf9\\xa0\\xe3\\x00\\x01\\x00\\x00 | /bin/dd of=$OUTPUT_FILE conv=notrunc > /dev/null 2>&1
+
+# Insert the DTB into the file.
+/bin/dd if=$DTB_FILE obs=256 seek=1 of=$OUTPUT_FILE conv=notrunc > /dev/null 2>&1
+
+# Append the image file.
+/bin/cat $IMAGE_FILE >> $OUTPUT_FILE
+

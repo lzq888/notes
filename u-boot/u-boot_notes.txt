@@ -1,0 +1,7 @@
+# Building u-boot for mx23_olinuxino
+cd u-boot
+vi doc/README.mxs
+CROSS_COMPILE=arm-none-eabi- make mx23_olinuxino_defconfig
+CROSS_COMPILE=arm-none-eabi- make
+
+

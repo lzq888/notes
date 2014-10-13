@@ -1,0 +1,4 @@
+Build line:
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
+make ARCH=arm CROSS_COMPILE=arm-none-eabi-

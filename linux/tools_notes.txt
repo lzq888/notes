@@ -1,0 +1,6 @@
+The linux kernel and u-boot are built with the tools installed
+from the following location:
+
+https://launchpad.net/~terry.guo/+archive/ubuntu/gcc-arm-embedded
+
+

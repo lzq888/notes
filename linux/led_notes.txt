@@ -1,0 +1,8 @@
+To turn on an LED:
+
+echo 1 > /sys/class/leds/green\:led0/brightness
+
+To turn off an LED:
+
+echo 0 > /sys/class/leds/green\:led0/brightness
+

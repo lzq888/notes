@@ -90,6 +90,10 @@ echo Running rcS
 /bin/mount -t sysfs sysfs /sys
 /bin/mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
 
+# Fill in /dev directory with mdev
+/bin/echo > /dev/mdev.seq
+/sbin/mdev -s
+
 EOF
 chmod 755 etc/init.d/rcS
 

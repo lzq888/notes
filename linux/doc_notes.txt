@@ -1,0 +1,3 @@
+Do a 'make htmldocs' from the top level, you'll get a 
+Documentation/DocBook/index.html which you can peruse. 
+Look at the genericirq section for some more details.

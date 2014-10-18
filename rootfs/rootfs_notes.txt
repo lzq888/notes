@@ -16,9 +16,10 @@ cd ~mike/Linux/sources
 git clone git://busybox.net/busybox.git
 cd busybox
 git checkout origin/1_22_stable
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- defconfig
-LDFLAGS="--static" make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j4
-LDFLAGS="--static" make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install
+cp ../../notes/configs/busybox_config.txt .config
+make ARCH=arm menuconfig
+make ARCH=arm 
+make ARCH=arm install
 rsync -a _install/ ../../rootfs/
 
 ##################################################

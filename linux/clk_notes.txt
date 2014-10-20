@@ -1,0 +1,21 @@
+
+Mount the debugfs:
+
+# mount -t debugfs none /sys/kernel/debug
+
+Enable the clock tree:
+
+Device Drivers  --->
+    Common Clock Framework  --->
+        [*]   DebugFS representation of clock tree
+
+Creates a directory hierarchy in debugfs for visualizing the clk
+tree structure.  Each directory contains read-only members
+that export information specific to that clk node: clk_rate,
+clk_flags, clk_prepare_count, clk_enable_count &
+clk_notifier_count. 
+
+Display the clock tree summary:
+
+# cat /sys/kernel/debug/clk/clk_summary
+

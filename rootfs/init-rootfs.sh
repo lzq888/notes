@@ -80,6 +80,13 @@ EOF
 chmod 644 etc/fstab
 
 #----------------------------------------------------------
+# Create the mdev file
+cat <<EOF > etc/mdev.conf
+mmcblk([0-9]+)p([0-9]+) 0:0 660 */sbin/automount.sh \$MDEV
+EOF
+chmod 644 etc/mdev.conf
+
+#----------------------------------------------------------
 # Create the init.d/rcS
 cat <<EOF > etc/init.d/rcS
 #!/bin/sh
@@ -90,7 +97,7 @@ echo Running rcS
 /bin/mount -t sysfs sysfs /sys
 /bin/mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
 
-# Fill in /dev directory with mdev
+# Fill in /dev 
 /bin/echo > /dev/mdev.seq
 /sbin/mdev -s
 
@@ -125,5 +132,65 @@ cat <<EOF > etc/hostname
 minilinux
 EOF
 chmod 644 etc/hostname
+
+#----------------------------------------------------------
+# Create automount shell script
+cat <<EOF > sbin/automount.sh
+#!/bin/sh
+
+if [ "\$1" == "" ]; then
+  echo "parameter is none" > /tmp/error.txt
+  exit 1
+fi
+
+MNT=\$1
+if echo "\$1" | grep mmcblk; then
+  if echo "\$1" | grep p[25]; then
+    MNT=sdcard2
+  else
+    MNT=sdcard
+  fi
+else
+  if echo "\$1" | grep sd; then
+    if echo "\$1" | grep [25]; then
+      MNT=nandcard2
+    else
+      MNT=nandcard
+    fi
+  fi
+fi
+
+mounted=\`mount | grep \$1 | wc -l\`
+#echo "par=\$1,mounted=\$mounted,MNT=\$MNT" > /dev/console
+
+# not mounted, lets mount under /mnt
+if [ \$mounted -lt 1 ]; then
+  if ! mkdir -p "/mnt/\$1"; then
+    exit 1
+  fi
+
+#try jffs2 first
+  if ! mount -t jffs2 "/dev/\$1" "/mnt/\$1" > /dev/null 2>&1; then
+#try vfat
+    if ! mount -t vfat -o noatime,shortname=mixed,utf8 "/dev/\$1" "/mnt/\$1" > /dev/null 2>&1; then
+# failed to mount, clean up mountpoint
+      if ! rmdir "/mnt/\$1"; then
+        exit 1
+      fi
+      exit 1
+    else
+      ln -s /mnt/\$1 /mnt/\$MNT
+      echo "[Mount VFAT]: /dev/\$1 --> /mnt/\$MNT" > /dev/console
+      echo "A/mnt/\$1" >> /tmp/usbmnt.log
+      echo "A/mnt/\$1" > /tmp/fifo.1
+    fi
+  else
+    echo "[Mount JFFS2]: /dev/\$1 --> /mnt/\$MNT" > /dev/console
+    echo "A/mnt/\$1" >> /tmp/usbmnt.log
+    echo "A/mnt/\$1" > /tmp/fifo.1
+  fi
+fi
+EOF
+chmod 755 sbin/automount.sh
 
 

@@ -23,6 +23,24 @@ make ARCH=arm install
 rsync -a _install/ ../../rootfs/
 
 ##################################################
+# Building DOSFS Tools
+
+cd ~mike/Linux/sources
+git clone http://daniel-baumann.ch/git/software/dosfstools.git
+cd dosfstools
+# Add the following to the top of the Makefile
+-------------------------------------------------
+CC = arm-none-linux-gnueabi-gcc
+LINK = arm-none-linux-gnueabi-gcc
+CFLAGS = -DPATH_MAX=256
+LDFLAGS = --static
+LDLIBS = -liconv
+-------------------------------------------------
+make
+arm-none-linux-gnueabi-strip fatlabel fsck.fat mkfs.fat
+cp fsck.fat ../../rootfs/sbin
+
+##################################################
 # Copy the Binaries to the Rootfs
 
 cd ~mike/Nuvoton/bsp/sources/binaries

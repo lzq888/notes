@@ -19,11 +19,23 @@ mkdir -p root
 mkdir -p var/shm
 mkdir -p var/run
 mkdir -p etc/init.d
+mkdir -p etc/network
+mkdir -p etc/netplug
+mkdir -p etc/netplug.d
 
 #----------------------------------------------------------
 # Copy over the current kernel configuration file.
 mkdir -p etc/config
 cp ../arm-soc/.config etc/config/config.txt
+
+#----------------------------------------------------------
+# Create the network interface directories
+mkdir -p etc/network/if-down.d
+mkdir -p etc/network/if-post-up.d
+mkdir -p etc/network/if-pre-up.d
+mkdir -p etc/network/if-post-down.d
+mkdir -p etc/network/if-pre-down.d
+mkdir -p etc/network/if-up.d
 
 #----------------------------------------------------------
 # Create Core Device files
@@ -40,6 +52,7 @@ cat <<EOF > etc/profile
 # Add paths here
 EOF
 chmod 644 etc/profile
+
 #----------------------------------------------------------
 # Create a basic inittab for init
 cat <<EOF > etc/inittab
@@ -83,6 +96,8 @@ chmod 644 etc/fstab
 # Create the mdev file
 cat <<EOF > etc/mdev.conf
 mmcblk([0-9]+)p([0-9]+) 0:0 660 */sbin/automount.sh \$MDEV
+sd([a-z]+)([0-9]+)      0:0 660 */sbin/automount.sh \$MDEV
+mtdblock([0-9]+)        0:0 660 */sbin/automount.sh \$MDEV
 EOF
 chmod 644 etc/mdev.conf
 
@@ -98,7 +113,10 @@ echo Running rcS
 /bin/mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
 
 # Fill in /dev 
+/bin/mkdir -p /dev/pts
+#/bin/mount -t devpts devpts /dev/pts
 /bin/echo > /dev/mdev.seq
+/bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
 /sbin/mdev -s
 
 EOF

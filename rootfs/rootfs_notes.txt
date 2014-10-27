@@ -12,7 +12,7 @@ mkdir rootfs
 # https://gist.github.com/vsergeev/2391575
 # See vi problem here: http://lists.busybox.net/pipermail/busybox-cvs/2008-September/028214.html
 
-cd ~mike/Linux/sources
+cd ~mike/Linux/runtime
 git clone git://busybox.net/busybox.git
 cd busybox
 git checkout origin/1_22_stable
@@ -25,7 +25,7 @@ rsync -a _install/ ../../rootfs/
 ##################################################
 # Building DOSFS Tools
 
-cd ~mike/Linux/sources
+cd ~mike/Linux/runtime
 git clone http://daniel-baumann.ch/git/software/dosfstools.git
 cd dosfstools
 # Add the following to the top of the Makefile
@@ -43,13 +43,13 @@ cp fsck.fat ../../rootfs/sbin
 ##################################################
 # Copy the Binaries to the Rootfs
 
-cd ~mike/Nuvoton/bsp/sources/binaries
+cd ~mike/Nuvoton/bsp/runtime/binaries
 rsync -a rootfs/ ../../rootfs-minimal/
 
 ##################################################
 # Create the Lib Romfs
 
-cd ~mike/Nuvoton/bsp/sources/lib
+cd ~mike/Nuvoton/bsp/runtime/lib
 genromfs -f ../../image/lib_romfs.bin -d ./lib
 
 ##################################################
@@ -57,7 +57,7 @@ genromfs -f ../../image/lib_romfs.bin -d ./lib
 # http://events.linuxfoundation.org/sites/events/files/slides/nodejs-presentation_0.pdf
 # See armv5 instructions: http://www.nodejs-news.com/nodejs-tech/nodejs-armv5-armv6-howto/
 
-cd ~mike/Nuvoton/bsp/sources
+cd ~mike/Nuvoton/bsp/runtime
 git clone git://github.com/joyent/node.git
 cd node
 git checkout v0.8.26-release
@@ -78,37 +78,37 @@ genromfs -f ../../image/nodejs_romfs.bin -d ./node-arm/usr/nodejs
 ##################################################
 # Create the Curl Romfs
 
-cd ~mike/Nuvoton/bsp/sources/curl/
+cd ~mike/Nuvoton/bsp/runtime/curl/
 genromfs -f ../../image/curl_romfs.bin -d ./curl
 
 ##################################################
 # Create the Dropbear Romfs
 
-cd ~mike/Nuvoton/bsp/sources/dropbear
+cd ~mike/Nuvoton/bsp/runtime/dropbear
 genromfs -f ../../image/dropbear_romfs.bin -d ./dropbear
 
 ##################################################
 # Copy Wifi Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/sources/wifi
+cd ~mike/Nuvoton/bsp/runtime/wifi
 genromfs -f ../../image/wifi_romfs.bin -d ./wifi
 
 ##################################################
 # Copy Netplug Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/sources/netplug
+cd ~mike/Nuvoton/bsp/runtime/netplug
 genromfs -f ../../image/netplug_romfs.bin -d ./netplug
 
 ##################################################
 # Copy NodeJS Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/sources/nodejs
+cd ~mike/Nuvoton/bsp/runtime/nodejs
 genromfs -f ../../image/nodejs_romfs.bin -d ./nodejs
 
 ##################################################
 # Copy ALSA Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/sources/alsa
+cd ~mike/Nuvoton/bsp/runtime/alsa
 genromfs -f ../../image/alsa_romfs.bin -d ./alsa
 
 ##################################################
@@ -256,7 +256,7 @@ chmod 644 etc/group
 
 # Install a basic udhcpc script
 mkdir -p usr/share/udhcpc
-cp ~mike/Nuvoton/bsp/sources/busybox/examples/udhcp/simple.script usr/share/udhcpc/default.script
+cp ~mike/Nuvoton/bsp/runtime/busybox/examples/udhcp/simple.script usr/share/udhcpc/default.script
 
 # Designate a hostname
 cat <<EOF > etc/hostname

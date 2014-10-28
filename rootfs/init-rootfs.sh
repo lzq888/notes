@@ -119,6 +119,24 @@ echo Running rcS
 /bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
 /sbin/mdev -s
 
+# Linking the boot directory
+if [ -d /mnt/mmcblk0p1 ]; then
+  echo "Linking the /boot directory"
+  /bin/ln -s /mnt/mmcblk0p1 /boot
+else
+  echo "Failed to link the /boot directory"
+fi
+
+# Mount the lib romfs
+if [ -f /boot/lib_romfs.bin ]; then
+  echo "Mounting lib_romfs.bin"
+  mkdir -p /lib
+  mount -t romfs /boot/lib_romfs.bin /lib
+  if [ ! "\$?" == "0" ]; then
+    echo "Failed to mount lib_romfs.bin"
+  fi
+fi
+
 EOF
 chmod 755 etc/init.d/rcS
 

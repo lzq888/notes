@@ -41,16 +41,25 @@ arm-none-linux-gnueabi-strip fatlabel fsck.fat mkfs.fat
 cp fsck.fat ../../rootfs/sbin
 
 ##################################################
-# Copy the Binaries to the Rootfs
-
-cd ~mike/Nuvoton/bsp/runtime/binaries
-rsync -a rootfs/ ../../rootfs-minimal/
-
-##################################################
 # Create the Lib Romfs
 
-cd ~mike/Nuvoton/bsp/runtime/lib
-genromfs -f ../../image/lib_romfs.bin -d ./lib
+cd ~mike/Nuvoton/bsp/runtime
+mkdir -p ./lib
+cd ./lib
+cp ../../tools/runtime/make_lib_romfs.sh .
+./make_lib_romfs.sh
+
+##################################################
+# Copy Wifi Binaries and Configuration
+
+cd ~mike/Nuvoton/bsp/runtime/wifi
+genromfs -f ../../image/wifi_romfs.bin -d ./wifi
+
+##################################################
+# Create the Dropbear Romfs
+
+cd ~mike/Nuvoton/bsp/runtime/dropbear
+genromfs -f ../../image/dropbear_romfs.bin -d ./dropbear
 
 ##################################################
 # Building NodeJS
@@ -80,18 +89,6 @@ genromfs -f ../../image/nodejs_romfs.bin -d ./node-arm/usr/nodejs
 
 cd ~mike/Nuvoton/bsp/runtime/curl/
 genromfs -f ../../image/curl_romfs.bin -d ./curl
-
-##################################################
-# Create the Dropbear Romfs
-
-cd ~mike/Nuvoton/bsp/runtime/dropbear
-genromfs -f ../../image/dropbear_romfs.bin -d ./dropbear
-
-##################################################
-# Copy Wifi Binaries and Configuration
-
-cd ~mike/Nuvoton/bsp/runtime/wifi
-genromfs -f ../../image/wifi_romfs.bin -d ./wifi
 
 ##################################################
 # Copy Netplug Binaries and Configuration

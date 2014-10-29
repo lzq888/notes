@@ -62,6 +62,12 @@ cd ~mike/Nuvoton/bsp/runtime/dropbear
 genromfs -f ../../image/dropbear_romfs.bin -d ./dropbear
 
 ##################################################
+# Copy Netplug Binaries and Configuration
+
+cd ~mike/Nuvoton/bsp/runtime/netplug
+genromfs -f ../../image/netplug_romfs.bin -d ./netplug
+
+##################################################
 # Building NodeJS
 # http://events.linuxfoundation.org/sites/events/files/slides/nodejs-presentation_0.pdf
 # See armv5 instructions: http://www.nodejs-news.com/nodejs-tech/nodejs-armv5-armv6-howto/
@@ -89,12 +95,6 @@ genromfs -f ../../image/nodejs_romfs.bin -d ./node-arm/usr/nodejs
 
 cd ~mike/Nuvoton/bsp/runtime/curl/
 genromfs -f ../../image/curl_romfs.bin -d ./curl
-
-##################################################
-# Copy Netplug Binaries and Configuration
-
-cd ~mike/Nuvoton/bsp/runtime/netplug
-genromfs -f ../../image/netplug_romfs.bin -d ./netplug
 
 ##################################################
 # Copy NodeJS Binaries and Configuration

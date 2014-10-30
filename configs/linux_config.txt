@@ -535,8 +535,10 @@ CONFIG_BQL=y
 # CONFIG_BT is not set
 # CONFIG_AF_RXRPC is not set
 CONFIG_WIRELESS=y
+CONFIG_WIRELESS_EXT=y
 CONFIG_WEXT_CORE=y
 CONFIG_WEXT_PROC=y
+CONFIG_WEXT_PRIV=y
 CONFIG_CFG80211=y
 CONFIG_NL80211_TESTMODE=y
 # CONFIG_CFG80211_DEVELOPER_WARNINGS is not set
@@ -830,8 +832,13 @@ CONFIG_KEYBOARD_GPIO_POLLED=y
 # Character devices
 #
 CONFIG_TTY=y
-# CONFIG_VT is not set
-# CONFIG_UNIX98_PTYS is not set
+CONFIG_VT=y
+# CONFIG_CONSOLE_TRANSLATIONS is not set
+# CONFIG_VT_CONSOLE is not set
+CONFIG_HW_CONSOLE=y
+# CONFIG_VT_HW_CONSOLE_BINDING is not set
+CONFIG_UNIX98_PTYS=y
+# CONFIG_DEVPTS_MULTIPLE_INSTANCES is not set
 # CONFIG_LEGACY_PTYS is not set
 # CONFIG_SERIAL_NONSTANDARD is not set
 # CONFIG_N_GSM is not set
@@ -1007,6 +1014,11 @@ CONFIG_BCMA_POSSIBLE=y
 # CONFIG_FB is not set
 # CONFIG_BACKLIGHT_LCD_SUPPORT is not set
 # CONFIG_VGASTATE is not set
+
+#
+# Console display driver support
+#
+CONFIG_DUMMY_CONSOLE=y
 # CONFIG_SOUND is not set
 
 #
@@ -1300,7 +1312,34 @@ CONFIG_RTC_LIB=y
 #
 # Microsoft Hyper-V guest support
 #
-# CONFIG_STAGING is not set
+CONFIG_STAGING=y
+# CONFIG_PRISM2_USB is not set
+# CONFIG_COMEDI is not set
+# CONFIG_RTLLIB is not set
+# CONFIG_R8712U is not set
+CONFIG_R8188EU=m
+CONFIG_88EU_AP_MODE=y
+# CONFIG_VT6656 is not set
+# CONFIG_BCM_WIMAX is not set
+# CONFIG_FT1000 is not set
+
+#
+# Speakup console speech
+#
+# CONFIG_SPEAKUP is not set
+# CONFIG_STAGING_MEDIA is not set
+
+#
+# Android
+#
+# CONFIG_ANDROID is not set
+# CONFIG_USB_WPAN_HCD is not set
+# CONFIG_WIMAX_GDM72XX is not set
+# CONFIG_LTE_GDM724X is not set
+# CONFIG_LUSTRE_FS is not set
+# CONFIG_XILLYBUS is not set
+# CONFIG_DGAP is not set
+# CONFIG_GS_FPGABOOT is not set
 
 #
 # SOC (System On Chip) specific Drivers

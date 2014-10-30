@@ -43,7 +43,7 @@ cp fsck.fat ../../rootfs/sbin
 ##################################################
 # Create the Lib Romfs
 
-cd ~mike/Nuvoton/bsp/runtime
+cd ~mike/Linux/runtime/runtime
 mkdir -p ./lib
 cd ./lib
 cp ../../tools/runtime/make_lib_romfs.sh .
@@ -52,19 +52,19 @@ cp ../../tools/runtime/make_lib_romfs.sh .
 ##################################################
 # Copy Wifi Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/runtime/wifi
+cd ~mike/Linux/runtime/wifi
 genromfs -f ../../image/wifi_romfs.bin -d ./wifi
 
 ##################################################
 # Create the Dropbear Romfs
 
-cd ~mike/Nuvoton/bsp/runtime/dropbear
+cd ~mike/Linux/runtime/dropbear
 genromfs -f ../../image/dropbear_romfs.bin -d ./dropbear
 
 ##################################################
 # Copy Netplug Binaries and Configuration
 
-cd ~mike/Nuvoton/bsp/runtime/netplug
+cd ~mike/Linux/runtime/netplug
 genromfs -f ../../image/netplug_romfs.bin -d ./netplug
 
 ##################################################

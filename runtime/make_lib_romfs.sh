@@ -32,6 +32,24 @@ libitm.spec
 libm-0.9.33.2.so
 libm.so
 libm.so.0
+libnl-3.so
+libnl-3.so.200
+libnl-3.so.200.20.0
+libnl-cli-3.so
+libnl-cli-3.so.200
+libnl-cli-3.so.200.20.0
+libnl-genl-3.so
+libnl-genl-3.so.200
+libnl-genl-3.so.200.20.0
+libnl-idiag-3.so
+libnl-idiag-3.so.200
+libnl-idiag-3.so.200.20.0
+libnl-nf-3.so
+libnl-nf-3.so.200
+libnl-nf-3.so.200.20.0
+libnl-route-3.so
+libnl-route-3.so.200
+libnl-route-3.so.200.20.0
 libnsl-0.9.33.2.so
 libnsl.so
 libnsl.so.0
@@ -77,6 +95,12 @@ do
    echo $file
    cp -a /usr/local/arm_linux_4.7/arm-none-linux-gnueabi/lib/$file lib
 done
+
+# Copy the firmware directory
+cp -a ./firmware ./lib/firmware
+
+# Chown everything to root
+chown -R root:root ./lib
 
 # Generate the library romfs
 genromfs -f ../../image/lib_romfs.bin -d ./lib

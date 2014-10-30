@@ -114,7 +114,7 @@ echo Running rcS
 
 # Fill in /dev 
 /bin/mkdir -p /dev/pts
-#/bin/mount -t devpts devpts /dev/pts
+/bin/mount -t devpts devpts /dev/pts
 /bin/echo > /dev/mdev.seq
 /bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
 /sbin/mdev -s

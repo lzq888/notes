@@ -357,7 +357,7 @@ if [ \$mounted -lt 1 ]; then
 #try jffs2 first
   if ! mount -t jffs2 "/dev/\$1" "/mnt/\$1" > /dev/null 2>&1; then
 #try vfat
-    if ! mount -t vfat -o noatime,shortname=mixed,utf8 "/dev/\$1" "/mnt/\$1" > /dev/null 2>&1; then
+    if ! mount -t vfat -o sync,noatime,shortname=mixed,utf8 "/dev/\$1" "/mnt/\$1" > /dev/null 2>&1; then
 # failed to mount, clean up mountpoint
       if ! rmdir "/mnt/\$1"; then
         exit 1

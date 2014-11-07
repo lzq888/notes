@@ -650,6 +650,7 @@ CONFIG_MTD_CFI_I2=y
 # Self-contained MTD device drivers
 #
 # CONFIG_MTD_DATAFLASH is not set
+CONFIG_MTD_M25P80=y
 # CONFIG_MTD_SST25L is not set
 # CONFIG_MTD_SLRAM is not set
 # CONFIG_MTD_PHRAM is not set
@@ -680,7 +681,7 @@ CONFIG_MTD_NAND_N329=y
 #
 # CONFIG_MTD_LPDDR is not set
 # CONFIG_MTD_LPDDR2_NVM is not set
-# CONFIG_MTD_SPI_NOR is not set
+CONFIG_MTD_SPI_NOR=y
 # CONFIG_MTD_UBI is not set
 CONFIG_DTC=y
 CONFIG_OF=y
